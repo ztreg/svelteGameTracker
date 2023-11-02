@@ -1,59 +1,89 @@
-<script>
-	import Counter from './Counter.svelte';
-	import welcome from '$lib/images/svelte-welcome.webp';
-	import welcome_fallback from '$lib/images/svelte-welcome.png';
+
+<script lang="ts">
+	import { onMount } from 'svelte';
+	import { fetchNmrOfCats, type Cat } from '../lib/services/api';
+	import { catsData } from '$lib/stores/store';
+	import Card from './Card.svelte';
+
+	let gameStarted = false
+	let clickedIds: string[] = []
+	let clickedId = ''
+	let counter = 0
+	let cards: NodeListOf<Element>
+
+
+	async function startGame() {
+		await fetchNmrOfCats(5)
+		gameStarted = true
+	}
+
+	$: if (clickedId) {
+		clickedIds = [...clickedIds, clickedId]
+		clickedId = ''
+		console.log(clickedIds);
+		
+	}
+
+	$: if(counter > 0) {
+		cards = document.querySelectorAll('.card');
+		[...cards].forEach((card)=>{
+			card.addEventListener( 'click', function() {
+				card.classList.toggle('flip');
+			});
+		});	
+	}
+	
+	$: if (clickedIds.length === 2) {
+		
+		clickedIds = []
+	}
+	
 </script>
 
 <svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
+	<title>CatMurry</title>
+	<meta name="description" content="CatMurry" />
 </svelte:head>
 
 <section>
-	<h1>
-		<span class="welcome">
-			<picture>
-				<source srcset={welcome} type="image/webp" />
-				<img src={welcome_fallback} alt="Welcome" />
-			</picture>
-		</span>
+	{#if !gameStarted}
+		<h2>
+			<button type="button" on:click={() => startGame()}>Start Game</button>
+		</h2>
+	{/if}
 
-		to your new<br />SvelteKit app
-	</h1>
 
-	<h2>
-		try editing <strong>src/routes/+page.svelte</strong>
-	</h2>
+	<div class="card-wrapper">
+		{#if $catsData.length > 0 && gameStarted}
+			{#each $catsData as cat}
+				<Card bind:counter  bind:clickedId cat="{cat}" />
+			{/each}
+			{#each $catsData as cat}
+				<Card bind:counter bind:clickedId cat="{cat}" />
+			{/each}
+		{/if}
+	</div>
 
-	<Counter />
 </section>
 
 <style>
 	section {
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
-		align-items: center;
 		flex: 0.6;
-	}
-
-	h1 {
 		width: 100%;
 	}
-
-	.welcome {
-		display: block;
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
+	.card-wrapper {
+		display: flex;
+		justify-content: flex-start;
+		flex-direction: column;
+		height: calc(100vh - 200px);
+		width: 550px;
+		gap: 16px;
+		flex-wrap: wrap;
 	}
+	.flip {
+		transform: rotateY(180deg);
+		}
 
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
-	}
 </style>
