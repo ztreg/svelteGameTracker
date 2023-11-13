@@ -8,7 +8,7 @@ const CAT_URL = `${ROOT_URL}cat`
 const RANDOM_CAT = 'https://cataas.com/cat'
 const LOGINURL = `${ROOT_URL}/api/v1/auth/api-token-auth/`
 const MEURL = `${ROOT_URL}/api/v1/me/`
-
+import { v4 as uuidv4 } from 'uuid';
 export interface Cat {
   tags: any[]
   createdAt: string
@@ -21,26 +21,34 @@ export interface Cat {
   _id: string
   url: string
   body: any
+  uniqueId: string
+  correct: boolean
 }
 
-
-
-// export function fetchCats(limit: number): void {
-//     fetch(`${ALL_CATS_URL}?limit=${limit}&skip=0`).then(res => {
-//         console.log(res)
-//         console.log(res.json())
-//         apiData.set(res.json());
-//     })
-//   }
-
 export async function fetchNmrOfCats(numberOfCats: number): Promise<void> {
-
+  const allCats: Cat[] = []
   for(let i = 0; i < numberOfCats; i++) {
-    const res = await fetch(`${RANDOM_CAT}?json=true&width=150&height=150`, { headers: getPublicHeaders() } )
-    const cat = await res.json() as Cat  
-    catsData.update(storeData => [...storeData, cat]);
+    const res = await fetch(`${RANDOM_CAT}?json=true&width=200&height=200`, { headers: getPublicHeaders() } )
+    const cat = await res.json() as Cat
+    allCats.push(cat)
+    
   }
+  const stringifiedCopy = JSON.stringify(allCats)
+  const test = JSON.parse(stringifiedCopy)
+  const stringifiedCopy2 = JSON.stringify(allCats)
+  const test2 = JSON.parse(stringifiedCopy2)
+  
+  const data = [
+    ...test,
+    ...test2
+  ]
 
+  const duplicates = data.map(cat => {
+    cat.uniqueId = uuidv4();
+    return cat
+  })
+  const shuffledArray = duplicates.sort((a, b) => 0.5 - Math.random());
+  catsData.update(storeData => [...storeData, ...shuffledArray]);
   
 }
 // eslint-disable-next-line import/no-anonymous-default-export

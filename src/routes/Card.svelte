@@ -3,29 +3,37 @@
 	import { onMount } from "svelte";
 
     export let cat: Cat
-    export let clickedId: string
+    export let clickedCat: Cat | null
     export let counter: number
+    let cardFlipping = false
+    
     const src = 'https://cataas.com/cat/' + cat._id + '?position=centre&width=200&height=200'
-    
+    // const src = 'https://cataas.com/cat/5w3BlQo4wqJTLDJk%3F/says/hello?font=Impact&fontSize=30&fontColor=%23000&fontBackground=none&position=centre&width=200&height=200'
     function clickCard() {
-        clickedId = cat._id
+        clickedCat = cat
     }
-    
+
+
 	onMount(() => {
         counter = counter + 1
     });
 
 </script>
 <main>
+    
     {#if src}
-        <div class="flip-card" id="{cat._id}">
-            <button class="card" on:click={clickCard}>
-                <div class="card-image">
-                    <img {src} alt="" srcset="">
-                </div>    
-                <div class="card-image2">
-                <img src="src\lib\images\cat-questionmark.jpg" alt="" srcset="">
-            </div>   
+        <div class="flip-card" class:correct={cat.correct === true}>
+            <button 
+              disabled={cat.correct}
+              class="{cat._id} card {cat.uniqueId}" 
+              on:click={clickCard} 
+            >
+              <div class="card-image">
+                  <img {src} alt="" srcset="">
+              </div>    
+              <div class="card-image2">
+                  <img src="src\lib\images\cat-questionmark.jpg" alt="" srcset="">
+              </div>   
             </button>
         </div>
     {/if}
@@ -35,13 +43,14 @@
     main, .card, .card-image, .card-image2 {
         width: 200px;
         height: 200px; 
+        cursor: pointer;
     }
     button {
         padding: 0;
     }
     img {
           width: 200px;
-          height: auto;  
+          height: 200px; 
     }
     /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 
@@ -52,6 +61,37 @@
     width: 200px;
     height: 200px;
     perspective: 1000px; /* Remove this if you don't want the 3D effect */
+    animation: 3s slidein;
+}
+
+.correct {
+  opacity: 0.6;
+  border: 5px solid green;
+  animation: 1s correctGuess;
+  /* border-radius: 4px; */
+  /* cursor: default; */
+}
+/* @keyframes slidein {
+  from {
+    margin-left: 100%;
+    width: 300%;
+  }
+
+  to {
+    margin-left: 0%;
+    width: 100%;
+  }
+} */
+@keyframes correctGuess {
+  from {
+    opacity: 1;
+    border: 1px solid green;
+  }
+
+  to {
+    opacity: 0.6;
+    border: 5px solid green;
+  }
 }
 
 /* This container is needed to position the front and back side */
