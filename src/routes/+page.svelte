@@ -1,28 +1,30 @@
 
 <script lang="ts">
-	import { fetchNmrOfCats, type Cat } from '../lib/services/api';
-	import { catsData, correctCats } from '$lib/stores/store';
+	import GameDone from './components/gameDone.svelte';
+	import { fetchNmrOfCats, type Cat, type Difficulty } from '$lib/services/api';
+	import { catsData, gameSettings, lifeRemaining } from '$lib/stores/store';
 	import Card from './Card.svelte';
+	import GameDetails from './components/gameDetails.svelte';
 	import Rules from './components/rules.svelte';
 
 	let gameStarted = false
 	let clickedCats: Cat[] = []
 	let clickedCat: Cat | null
-	let counter = 0
+	let gameStatus = ''
 	let cards: NodeListOf<Element>
-	let timeToThink = 1000
 
-	async function startGame(rules: any) {
-		console.log(rules);
-		
-		await fetchNmrOfCats(5)
+	async function startGame(event: CustomEvent) {
+		const settings: Difficulty = event.detail
+		gameSettings.set(settings)
+		lifeRemaining.set(settings.numberOfErrors)
+		await fetchNmrOfCats(settings.numberOfCards || 5)
 		gameStarted = true
 		setTimeout(() => {
 			cards = document.querySelectorAll('.card');
 			[...cards].forEach((card)=>{
 				setTimeout(() => {
 					card.classList.toggle('flip');
-				}, timeToThink);
+				}, settings.timeToThink);
 
 				card.addEventListener( 'click', function() {
 					card.classList.toggle('flip');
@@ -33,28 +35,31 @@
 
 	}
 
+	// Card is clicked
 	$: if (clickedCat) {
 		clickedCats = [...clickedCats, clickedCat]
 		clickedCat = null
-
+		let clickCounter = 0
 		cards.forEach(card => {
-			// User clicks the same cars twice	
 			if (clickedCats.length === 2) {
+				// User clicks the same card twice	
 				if (clickedCats[0].uniqueId === clickedCats[1].uniqueId) {
 					console.log('same card, do nothing');
 				}
 				else if (clickedCats[0]._id !== clickedCats[1]._id) {
 					// Guessed wrong, flip back selected cards
-					console.log('wrooong');
 					if (card.className.includes(clickedCats[0].uniqueId) || card.className.includes(clickedCats[1].uniqueId)) {
 						setTimeout(() => {
 							card.classList.toggle('flip');
 						}, 800);
+						clickCounter++
+						if (clickCounter === 2) {
+							lifeRemaining.update(lives => (lives = lives - 1))
+						}
 							
 					}
 				}
 				else if (clickedCats[0]._id === clickedCats[1]._id) {
-					console.log('point!');
 					// Guessed correct, don't flip back selected cards
 					if (card.className.includes(clickedCats[0]._id)) {
 						catsData.update(allCats => {
@@ -72,6 +77,16 @@
 		})	
 	}
 
+	$: if($catsData.length > 0 && $gameSettings?.numberOfErrors) {
+		if($catsData.filter(cat => cat.correct === true).length === $catsData.length) {
+			gameStatus = 'won'
+		}
+		if($lifeRemaining === $gameSettings?.numberOfErrors - $gameSettings?.numberOfErrors) {
+			gameStatus = 'lost'
+		}
+	}
+
+	// Reset clicks
 	$: if (clickedCats.length === 2) {
 		clickedCats = []
 	}	
@@ -84,18 +99,27 @@
 </svelte:head>
 
 <section>
+	{#if $gameSettings} 
+		<GameDetails></GameDetails>
+	{/if}
+
 	{#if !gameStarted}
 		<Rules on:toggle={(rules) => startGame(rules)} ></Rules>
 	{/if}
 
+	{#if gameStatus}
+		<GameDone bind:gameStatus></GameDone>
+	{/if}
 
-	<div class="card-wrapper">
+	{#if gameStatus === ''}
 		{#if $catsData.length > 0 && gameStarted}
-			{#each $catsData as cat}
-				<Card bind:counter bind:clickedCat cat="{cat}" />
-			{/each}
+		 	<div class="card-wrapper">
+				{#each $catsData as cat}
+					<Card bind:clickedCat cat="{cat}" />
+				{/each}
+			</div>
 		{/if}
-	</div>
+	{/if}
 
 </section>
 
@@ -109,9 +133,8 @@
 	.card-wrapper {
 		display: flex;
 		justify-content: flex-start;
-		flex-direction: column;
-		height: calc(100vh - 200px);
-		width: 550px;
+		height: 100%;
+		width: 100%;
 		gap: 16px;
 		flex-wrap: wrap;
 	}

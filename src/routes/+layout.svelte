@@ -23,7 +23,10 @@
 		background-attachment: fixed;
 		background-size: 100vw 100vh;
 		background-repeat: no-repeat;
+		/* background-image: url('https://i.pinimg.com/originals/0d/7a/e1/0d7ae1673553b12e35a894df801628aa.gif'); */
+    	background-size: cover;
 		background-image: url("../lib/images/cat-bg.png")
+
 
 	}
 

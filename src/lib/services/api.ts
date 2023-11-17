@@ -9,21 +9,6 @@ const RANDOM_CAT = 'https://cataas.com/cat'
 const LOGINURL = `${ROOT_URL}/api/v1/auth/api-token-auth/`
 const MEURL = `${ROOT_URL}/api/v1/me/`
 import { v4 as uuidv4 } from 'uuid';
-export interface Cat {
-  tags: any[]
-  createdAt: string
-  updatedAt: string
-  validated: boolean
-  owner: string
-  file: string
-  mimetype: string
-  size: number
-  _id: string
-  url: string
-  body: any
-  uniqueId: string
-  correct: boolean
-}
 
 export async function fetchNmrOfCats(numberOfCats: number): Promise<void> {
   const allCats: Cat[] = []
@@ -77,3 +62,48 @@ export async function fetchNmrOfCats(numberOfCats: number): Promise<void> {
 //     }
 //   }
 // }
+
+export interface Cat {
+  tags: any[]
+  createdAt: string
+  updatedAt: string
+  validated: boolean
+  owner: string
+  file: string
+  mimetype: string
+  size: number
+  _id: string
+  url: string
+  body: any
+  uniqueId: string
+  correct: boolean
+}
+
+export type level= "easy" | "medium" | "hard"
+export interface Difficulty {
+  name: level,
+  numberOfCards: number
+  timeToThink: number
+  numberOfErrors: number
+}
+
+export const easy: Difficulty = {
+  name: 'easy',
+  numberOfCards: 5,
+  timeToThink: 2000,
+  numberOfErrors: 10
+}
+
+export const medium: Difficulty = {
+  name: 'medium',
+  numberOfCards: 10,
+  timeToThink: 1000,
+  numberOfErrors: 5
+}
+
+export const hard: Difficulty = {
+  name: 'hard',
+  numberOfCards: 20,
+  timeToThink: 500,
+  numberOfErrors: 2
+}

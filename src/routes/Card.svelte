@@ -1,22 +1,15 @@
 <script lang="ts">
 	import type { Cat } from "$lib/services/api";
 	import { onMount } from "svelte";
-
+  import { lazyLoad } from '../lib/utils/lazyLoad'
     export let cat: Cat
     export let clickedCat: Cat | null
-    export let counter: number
-    let cardFlipping = false
     
-    const src = 'https://cataas.com/cat/' + cat._id + '?position=centre&width=200&height=200'
+    const src = 'https://cataas.com/cat/' + cat._id + '?width=200&height=200'
     // const src = 'https://cataas.com/cat/5w3BlQo4wqJTLDJk%3F/says/hello?font=Impact&fontSize=30&fontColor=%23000&fontBackground=none&position=centre&width=200&height=200'
     function clickCard() {
         clickedCat = cat
     }
-
-
-	onMount(() => {
-        counter = counter + 1
-    });
 
 </script>
 <main>
@@ -29,7 +22,10 @@
               on:click={clickCard} 
             >
               <div class="card-image">
-                  <img {src} alt="" srcset="">
+                <figure>
+                  <img use:lazyLoad={src} alt="cat" />
+                </figure>
+      
               </div>    
               <div class="card-image2">
                   <img src="src\lib\images\cat-questionmark.jpg" alt="" srcset="">
