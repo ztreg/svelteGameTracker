@@ -1,12 +1,13 @@
 <script>
 	import Header from './Header.svelte';
 	import './styles.css';
+	import { catJamLevel } from "$lib/stores/store";
 </script>
 
 <div class="app">
 	<Header />
 
-	<main>
+	<main class="{$catJamLevel === 'level-3' ? 'level-3' : 'default'}">
 		<slot />
 	</main>
 
@@ -18,6 +19,10 @@
 <style>
 	.app {
 		min-height: 100vh;
+	}
+
+	.default {
+		background-image: url("../lib/images/cat-bg3.png");
 	}
 
 	footer {
@@ -40,7 +45,7 @@
 		margin: 0 auto;
 		box-sizing: border-box;
 		background-size: cover;
-		background-image: url("../lib/images/cat-bg3.png");
+		
   		background-position: center;
 		background-repeat: no-repeat;
 		background-attachment: fixed;

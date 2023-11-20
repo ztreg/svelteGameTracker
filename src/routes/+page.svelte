@@ -13,6 +13,7 @@
 	let gameStatus = ''
 	let cards: NodeListOf<Element>
 
+	// How in gods name do you do js
 	async function startGame(event: CustomEvent) {
 		const settings: Difficulty = event.detail
 		gameSettings.set(settings)
@@ -107,16 +108,16 @@
 		<GameDetails></GameDetails>
 	{/if}
 
-	{#if !gameStarted}
+	{#if $catsData.length === 0}
 		<Rules on:toggle={(rules) => startGame(rules)} ></Rules>
 	{/if}
 
-	{#if gameStatus}
+	{#if gameStatus && $catsData.length > 0}
 		<GameDone bind:gameStatus></GameDone>
 	{/if}
 
 	{#if gameStatus === ''}
-		{#if $catsData.length > 0 && gameStarted}
+		{#if $catsData.length > 0}
 		 	<div class="card-wrapper">
 				{#each $catsData as cat}
 					<Card bind:clickedCat cat="{cat}" />

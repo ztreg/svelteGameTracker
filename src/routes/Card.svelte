@@ -48,9 +48,7 @@
               on:click={clickCard} 
             >
               <div class="card-image" style="width: {size}px; height: {size}px">
-                <figure>
                   <img style="width: {size}px; height: {size}px" use:lazyLoad={src} alt="cat" />
-                </figure>
       
               </div>    
               <div style="width: {size}px; height: {size}px" class="card-image2">
@@ -88,7 +86,7 @@
 
 .correct {
   opacity: 0.6;
-  border: 5px solid green;
+  /* border: 5px solid green; */
   animation: 1s correctGuess;
   /* border-radius: 4px; */
   /* cursor: default; */
