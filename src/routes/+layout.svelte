@@ -17,21 +17,15 @@
 
 <style>
 	.app {
-		display: flex;
-		flex-direction: column;
 		min-height: 100vh;
-		background-attachment: fixed;
-		background-size: 100vw 100vh;
-		background-repeat: no-repeat;
-		/* background-image: url('https://i.pinimg.com/originals/0d/7a/e1/0d7ae1673553b12e35a894df801628aa.gif'); */
-    	background-size: cover;
-		background-image: url("../lib/images/cat-bg.png")
-
-
 	}
 
 	footer {
 		color: var(--color-theme-1);
+		position: fixed;
+		width: 100%;
+		bottom: 0;
+		background-color: black;
 	}
 
 	main {
@@ -40,9 +34,17 @@
 		flex-direction: column;
 		padding: 1rem;
 		width: 100%;
-		max-width: 90%;
+		min-height: calc(100vh - 50px);
+		height: auto;
+		background-color: black;
 		margin: 0 auto;
 		box-sizing: border-box;
+		background-size: cover;
+		background-image: url("../lib/images/cat-bg3.png");
+  		background-position: center;
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		padding-bottom: 100px;
 	}
 
 	footer {
@@ -51,10 +53,7 @@
 		justify-content: center;
 		align-items: center;
 		padding: 12px;
-	}
-
-	footer a {
-		font-weight: bold;
+		height: 50px;
 	}
 
 	@media (min-width: 480px) {

@@ -29,16 +29,15 @@
         {/each}
 
     </div>
-    <h2>
-        <button disabled={chosenDiff === undefined} type="button" on:click={() => startGame()}>Start Game</button>
-    </h2>
+    <button class="{chosenDiff ? '' : 'disabled'}" disabled={chosenDiff === undefined} type="button" on:click={() => startGame()}>Start Game</button>
+
 </div>
 
 <style>
     .wrapper {
         /* color: var(--color-theme-2); */
         width: 500px;
-        margin: 0 auto;
+        margin: 0 20%;
     }
     h1, h2, h3 {
         color: white;
@@ -57,7 +56,7 @@
         cursor: pointer;
     }
     .level:hover {
-        background-color: rgba(0, 0, 0, 0.511);
+        background-color: rgba(255, 236, 236, 0.067);
     }
     .active {
         border: 1px solid red;
@@ -71,5 +70,18 @@
     }
     .hard {
         color: var(--color-theme-1) 
+    }
+    button {
+        cursor: pointer;
+        color: white;
+        background: var(--color-theme-2);
+        margin-top: 16px;
+        padding: 16px;
+        width: 100%;
+    }
+    button.disabled {
+        background-color: rgba(255, 236, 236, 0.067);
+        cursor: default;
+        /* background: var(--color-theme-3); */
     }
 </style>

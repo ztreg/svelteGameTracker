@@ -6,7 +6,7 @@
 	<div class="corner1">
 
 	</div>
-	<button>Retry</button>
+	<button>Reset</button>
 	<h1>CatMurry</h1>
 	<button>Disable CatJams</button>
 	<div class="corner2">
@@ -20,6 +20,7 @@
 		color: white;
 		display: flex;
 		justify-content: space-between;
+		height: 100px;
 	}
 	button {
 		width: 100px;

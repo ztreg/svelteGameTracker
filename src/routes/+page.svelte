@@ -45,6 +45,10 @@
 				// User clicks the same card twice	
 				if (clickedCats[0].uniqueId === clickedCats[1].uniqueId) {
 					console.log('same card, do nothing');
+					clickCounter++
+					if (clickCounter === 2) {
+						lifeRemaining.update(lives => (lives = lives - 1))
+					}
 				}
 				else if (clickedCats[0]._id !== clickedCats[1]._id) {
 					// Guessed wrong, flip back selected cards
@@ -133,7 +137,7 @@
 	.card-wrapper {
 		display: flex;
 		justify-content: flex-start;
-		height: 100%;
+		height: calc(100% - 50px);
 		width: 100%;
 		gap: 16px;
 		flex-wrap: wrap;
