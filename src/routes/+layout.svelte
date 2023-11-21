@@ -22,7 +22,7 @@
 	}
 
 	.default {
-		background-image: url("../lib/images/cat-bg3.png");
+		background-image: url("https://images.unsplash.com/photo-1478098711619-5ab0b478d6e6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
 	}
 
 	footer {
