@@ -36,8 +36,9 @@
 <style>
     .wrapper {
         /* color: var(--color-theme-2); */
-        width: 500px;
-        margin: 0 20%;
+        max-width: 500px;
+        min-width: 280px;
+        margin: 0 10vw;
     }
     h1, h2, h3 {
         color: white;

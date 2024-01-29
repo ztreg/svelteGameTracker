@@ -14,9 +14,9 @@
 	<button on:click={() => resetData()}>Reset</button>
 	<h1>CatMurry</h1>
 	<div>
-		<button class="{$catJamLevel === 'level-3' ? 'active' : ''}" on:click={() => setJamLevel('3')}>CatJam level 3</button>
-		<button class="{$catJamLevel === 'level-2' ? 'active' : ''}" on:click={() => setJamLevel('2')}>CatJam level 2</button>
 		<button class="{$catJamLevel === 'level-1' ? 'active' : ''}" on:click={() => setJamLevel('1')}>CatJam level 1</button>
+		<button class="{$catJamLevel === 'level-2' ? 'active' : ''}" on:click={() => setJamLevel('2')}>CatJam level 2</button>
+		<button class="{$catJamLevel === 'level-3' ? 'active' : ''}" on:click={() => setJamLevel('3')}>CatJam level 3</button>
 	</div>
 	<div class="corner2 + {$catJamLevel}"></div>
 </header>

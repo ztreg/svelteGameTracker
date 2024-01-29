@@ -10,5 +10,5 @@ export const correctCats = writable(new Array<Cat>());
 export const points = writable(<number>(0));
 export const lifeRemaining = writable(<number>(0));
 export const gameSettings = writable(<Difficulty | null>(null))
-export const catJamLevel = writable<string>('level-2')
+export const catJamLevel = writable<string>('level-1')
 
