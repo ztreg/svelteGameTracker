@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { awesomeName } from "$lib/stores/store";
+
     // your script goes here
 
 </script>
@@ -8,6 +10,6 @@
 </style>
 
 <main>
-    <!-- { awesomeName } -->
+    { $awesomeName }
 </main>
 <!-- markup (zero or more items) goes here -->

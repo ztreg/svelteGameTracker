@@ -1,9 +1,9 @@
-<!-- Webpack vs esbuild vs vite vs rollup
+<!-- Webpack vs esbuild vs rollup vs vite
 
 ------------------------------------------------------
 component structure like vue & react -->
 <script lang="ts">
-	import { writable } from "svelte/store";
+	import { awesomeName } from "$lib/stores/store";
 
     // Local state variable
     let name = "Jonacito"
@@ -11,11 +11,16 @@ component structure like vue & react -->
     // Property from parent
     export let lastName: string;
 
-    // Computed variable
-    $: fullname = name + lastName
+    function changeName() {
+        name = "Pelle"
+    }
+
+    // Reactive logic
+    $: fullname = name +  ' ' + lastName
+    $: console.log(name)
 
     // Writeable (observable)
-    export const awesomeName = writable(<string>(''))
+    // const awesomeName = writable(<string>(''))
     
     // Update writable
     export const coolMethodName = () => {
@@ -25,20 +30,34 @@ component structure like vue & react -->
         }, 2000);
     }
 
+
 </script>
 
 <main>
-   <!-- Hello { name } { lastName } -->
-   Hello2 {fullname}
-   <br>
-   <button type="button" on:click={coolMethodName} >Do something</button>
-    <br>
-   Hello3 { $awesomeName}
+    <div>
+        Hello { name } { lastName }
+        <br>
+        <button type="button" on:click={changeName} >Change Name</button>
+        <button type="button" on:click={() => name = "Joooonas"} >Change Name Directly</button>
+        <br>
+        Hello2 {fullname}
+    </div>
+    <div>
+        <br>
+        <button type="button" on:click={coolMethodName} >Change writeable</button>
+        <br>
+        Hello3 { $awesomeName}
+        <br>
+    </div>
+
 </main>
 
 <style>
     main {
         padding: 40px;
-        color: red;
+        color: black;
+    }
+    div {
+            border-bottom: 1px solid black;
     }
 </style>
