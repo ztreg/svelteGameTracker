@@ -2,11 +2,12 @@
 	import Header from './Header.svelte';
 	import './styles.css';
 	import { catJamLevel } from "$lib/stores/store";
+	import CoolComponentName from './components/coolComponentName.svelte';
 </script>
 
 <div class="app">
 	<Header />
-
+	<CoolComponentName lastName="Gertz"/>
 	<main class="{$catJamLevel === 'level-3' ? 'level-3' : 'default'}">
 		<slot />
 	</main>
