@@ -13,3 +13,7 @@ export const gameSettings = writable(<Difficulty | null>(null))
 export const catJamLevel = writable<string>('level-1')
 export const gameStatus = writable<string>('')
 
+
+    // Writeable (observable)
+    export const awesomeName = writable(<string>(''))
+
