@@ -13,6 +13,7 @@ component structure like vue & react -->
     let svelteGood = false
     let writeablesGood = false
     let reactiveState = false
+    let stateGood = false
 
     // Property from parent
     export let lastName = '123'
@@ -53,12 +54,20 @@ component structure like vue & react -->
 
 <main>
     <div>
-        <h2>State</h2>
-        <p>Hello: { name } { lastName }</p>
-        <button type="button" on:click={changeName}>Change Name</button>
-        <button type="button" on:click={() => name = "Joooonas" } >Change State Directly</button>
-        <br>
+        <h2>Is state good?</h2>
+        <label>
+            <input checked={stateGood===true} on:change={() => stateGood = true} type="radio" name="stateGood" value="true" /> Yes
+        </label>
+        <label>
+            <input checked={stateGood===false} on:change={() => stateGood = false} type="radio" name="stateGood" value="false" /> No
+        </label>
 
+        {#if stateGood}
+            <p>Hello: { name } { lastName }</p>
+            <button type="button" on:click={changeName}>Change Name</button>
+            <button type="button" on:click={() => name = "Joooonas" } >Change State Directly</button>
+            <br>
+        {/if}
 
         
         <h2>Is reactive state good?</h2>
