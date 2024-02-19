@@ -14,6 +14,6 @@ export const catJamLevel = writable<string>('level-1')
 export const gameStatus = writable<string>('')
 
 
-    // Writeable (observable)
-    export const awesomeName = writable(<string>(''))
+// Writeable (observable)
+export const myWritable = writable(<string>('Default value'))
 

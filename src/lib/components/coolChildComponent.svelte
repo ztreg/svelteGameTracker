@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { awesomeName } from "$lib/stores/store";
 
-    // your script goes here
-
+    export let item: any
+    
 </script>
 
 <style>
@@ -10,6 +9,7 @@
 </style>
 
 <main>
-    { $awesomeName }
+    <!-- <button type="button" on:click={toggle}></button> -->
+    Name: { item.name }
 </main>
 <!-- markup (zero or more items) goes here -->
