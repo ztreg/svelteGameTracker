@@ -98,12 +98,12 @@ export const medium: Difficulty = {
   name: 'medium',
   numberOfCards: 10,
   timeToThink: 1000,
-  numberOfErrors: 5
+  numberOfErrors: 7
 }
 
 export const hard: Difficulty = {
   name: 'hard',
   numberOfCards: 20,
   timeToThink: 500,
-  numberOfErrors: 2
+  numberOfErrors: 5
 }

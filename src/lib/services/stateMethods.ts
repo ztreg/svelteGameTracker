@@ -1,6 +1,9 @@
-import { catsData, gameSettings } from "$lib/stores/store"
+import { catsData, gameSettings, gameStatus, lifeRemaining } from "$lib/stores/store"
+
 
 export function resetData() {
-    gameSettings.set(null)
-    catsData.set([])
+    gameSettings.update(() => null)
+    catsData.update(() => [])
+    lifeRemaining.update(() => 10)
+    gameStatus.update(() => '')
 }

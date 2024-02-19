@@ -1,5 +1,5 @@
 <script>
-	import Header from './Header.svelte';
+	import Header from '$lib/components/Header.svelte';
 	import './styles.css';
 	import { catJamLevel } from "$lib/stores/store";
 </script>
@@ -19,6 +19,12 @@
 <style>
 	.app {
 		min-height: 100vh;
+		/* width: 100%; */
+		background-color: black;
+		/* display: grid; */
+		/* place-items: center; */
+		animation: rotate 5s ease-in-out infinite;
+
 	}
 
 	.default {
@@ -50,6 +56,8 @@
 		background-repeat: no-repeat;
 		background-attachment: fixed;
 		padding-bottom: 100px;
+
+		
 	}
 
 	footer {

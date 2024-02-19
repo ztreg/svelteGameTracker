@@ -1,16 +1,16 @@
 
 <script lang="ts">
-	import GameDone from './components/gameDone.svelte';
+	import GameDone from '$lib/components/gameDone.svelte';
 	import { fetchNmrOfCats, type Cat, type Difficulty } from '$lib/services/api';
-	import { catsData, gameSettings, lifeRemaining } from '$lib/stores/store';
-	import Card from './Card.svelte';
-	import GameDetails from './components/gameDetails.svelte';
-	import Rules from './components/rules.svelte';
+	import { catsData, gameSettings, gameStatus, lifeRemaining } from '$lib/stores/store';
+	import Card from '$lib/components/Card.svelte';
+	import GameDetails from '$lib/components/gameDetails.svelte';
+	import Rules from '$lib/components/rules.svelte';
 
 	let gameStarted = false
 	let clickedCats: Cat[] = []
 	let clickedCat: Cat | null
-	let gameStatus = ''
+
 	let cards: NodeListOf<Element>
 
 	// How in gods name do you do js
@@ -45,7 +45,6 @@
 			if (clickedCats.length === 2) {
 				// User clicks the same card twice	
 				if (clickedCats[0].uniqueId === clickedCats[1].uniqueId) {
-					console.log('same card, do nothing');
 					clickCounter++
 					if (clickCounter === 2) {
 						lifeRemaining.update(lives => (lives = lives - 1))
@@ -84,10 +83,10 @@
 
 	$: if($catsData.length > 0 && $gameSettings?.numberOfErrors) {
 		if($catsData.filter(cat => cat.correct === true).length === $catsData.length) {
-			gameStatus = 'won'
+			$gameStatus = 'won'
 		}
 		if($lifeRemaining === $gameSettings?.numberOfErrors - $gameSettings?.numberOfErrors) {
-			gameStatus = 'lost'
+			$gameStatus = 'lost'
 		}
 	}
 
@@ -95,6 +94,15 @@
 	$: if (clickedCats.length === 2) {
 		clickedCats = []
 	}	
+
+	$: if($catsData) {
+		console.log($catsData.length);
+		
+	}
+	$: if($gameStatus) {
+		console.log($gameStatus);
+		
+	}
 	
 </script>
 
@@ -104,6 +112,7 @@
 </svelte:head>
 
 <section>
+
 	{#if $gameSettings} 
 		<GameDetails></GameDetails>
 	{/if}
@@ -112,11 +121,12 @@
 		<Rules on:toggle={(rules) => startGame(rules)} ></Rules>
 	{/if}
 
-	{#if gameStatus && $catsData.length > 0}
-		<GameDone bind:gameStatus></GameDone>
+	{#if $gameStatus !== '' && $catsData.length > 0}
+	{$gameStatus} - {$catsData.length}
+		<GameDone bind:gameStatus={$gameStatus}></GameDone>
 	{/if}
 
-	{#if gameStatus === ''}
+	{#if $gameStatus === ''}
 		{#if $catsData.length > 0}
 		 	<div class="card-wrapper">
 				{#each $catsData as cat}
