@@ -15,5 +15,5 @@ export const gameStatus = writable<string>('')
 
 
 // Writeable (observable)
-export const myWritable = writable(<string>('Default value'))
+export const myWritable = writable(<string | undefined>(undefined))
 

@@ -3,6 +3,9 @@
 
     // your script goes here
     const pageParams = $page.params?.id
+
+    export let data;
+    $: console.log(data)
     
 </script>
 
@@ -16,4 +19,5 @@
 <main>
     id: { pageParams }
 </main>
+
 <!-- markup (zero or more items) goes here -->
